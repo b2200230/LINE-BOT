@@ -20,7 +20,7 @@ public class Verification implements Replier {
             * ○/○ □□:□□
             * 　課題締め切り
             *
-            * みたいに予定表を表示させたいが、うまくいかない*/
+            * みたいに登録されている予定をもとに予定表を表示させたいが、うまくいかない*/
         }
         return new TextMessage(text);
     }
