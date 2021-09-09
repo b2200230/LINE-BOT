@@ -1,8 +1,10 @@
 package com.example.linebot;
 
 import com.example.linebot.replier.*;
+
 import com.linecorp.bot.model.event.FollowEvent;
 import com.linecorp.bot.model.message.Message;
+import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.slf4j.Logger;
@@ -15,10 +17,15 @@ import com.linecorp.bot.model.event.MessageEvent;
 //ユーザーの回答に反応
 import com.linecorp.bot.model.event.PostbackEvent;
 
+import com.linecorp.bot.model.message.TextMessage;
+
+
 @LineMessageHandler //LineBotのコントローラー部
 public class Callback {
 
     private static final Logger log = LoggerFactory.getLogger(Callback.class);
+
+    MakeList makeList = new MakeList();
 
     // フォローイベントに対応する
     @EventMapping
@@ -41,19 +48,24 @@ public class Callback {
                 return greet.reply();
             case "予定確認":
                 // リッチメニューから送信
-                Verification verification = new Verification();
-                return verification.reply();
+                return new TextMessage(makeList.getList());
             default:
-                //オウム返し
-                Parrot parrot = new Parrot(event);
-                return parrot.reply();
+//                //オウム返し
+//                Parrot parrot = new Parrot(event);
+//                return parrot.reply();
+
+                // もうわかんないから「やあ」と「予定確認」以外の文章送信したら全部予定だということにしようのコーナー
+                Schedule schedule = new Schedule(event);
+                return schedule.reply();
+
         }
     }
 
     // PostBackEventに対応する（ユーザーの回答に反応）
     @EventMapping
     public Message handlePostBack(PostbackEvent event) {
-        DialogAnswer dialogAnswer = new DialogAnswer(event);
-        return dialogAnswer.reply();
+        MakeList makeList = new MakeList();
+        DialogAnswer dialogAnswer = new DialogAnswer(event,makeList.scheduleList);
+        return new  TextMessage("");
     }
 }
