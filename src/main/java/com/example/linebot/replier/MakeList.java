@@ -17,15 +17,27 @@ public class MakeList implements Replier{
     }
 
     public void schedule_add(String time){
-        Schedule scheduleText = new Schedule(MessageEvent.<TextMessageContent>builder().build());
+        Schedule scheduleText = new Schedule();
         Add_schedule = (time + "\n　" + scheduleText.schedule);
-        scheduleList.add(Add_schedule);
+        /*
+        * ○年○月○日 ○:○
+        * 　入力された予定(scheduleText.schedule)
+        *
+        * となるように Add_schedule に保存　*/
+        scheduleList.add(Add_schedule); // 予定リストの中に追加(「予定確認」で見られるように)
     }
 
     public String getList(){
         String str = "予定リスト\n";
         for (String ele : scheduleList){
             str = (str + "\n" + ele);
+            /*
+             * ○年○月○日 ○:○
+             * 　予定
+             * ○年○月○日 ○:○
+             * 　予定
+             *
+             * となるように表示　*/
         }
         return str;
     }

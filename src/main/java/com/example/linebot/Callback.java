@@ -54,7 +54,8 @@ public class Callback {
 //                Parrot parrot = new Parrot(event);
 //                return parrot.reply();
 
-                // もうわかんないから「やあ」と「予定確認」以外の文章送信したら全部予定だということにしようのコーナー
+                // 「やあ」と「予定確認」以外の文章を送信したらそれは全部予定だということにする
+                // 日付は予定を入力した後にリッチメニューから入力
                 Schedule schedule = new Schedule(event);
                 return schedule.reply();
 
@@ -66,6 +67,6 @@ public class Callback {
     public Message handlePostBack(PostbackEvent event) {
         MakeList makeList = new MakeList();
         DialogAnswer dialogAnswer = new DialogAnswer(event,makeList.scheduleList);
-        return new  TextMessage("");
+        return dialogAnswer.reply();
     }
 }

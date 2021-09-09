@@ -43,6 +43,7 @@ public class DialogAnswer implements Replier {
             // ---------- ここから変更 -----------
             case "DT":
                 MakeList makeList = new MakeList();
+
             // ---------- 時間を取り出す ----------
                 String dt = this.event.getPostbackContent().getParams().get("datetime");
                 String[] date_link = dt.split("T"); // 日付と時刻をTで分割
@@ -52,8 +53,8 @@ public class DialogAnswer implements Replier {
                 String time = date_link[1]; // 時間部分のみ抽出
             // ----------------------------------
 
-                makeList.schedule_add(dd + " " + time);
-            return new TextMessage(makeList.Add_schedule + " を追加しました。");
+                makeList.schedule_add(dd + " " + time); // MakeList で入力された日付と予定を紐づけ
+            return new TextMessage(makeList.Add_schedule + "\nを追加しました。");
         }
         return new TextMessage("?");
     }

@@ -17,11 +17,12 @@ public class Schedule implements Replier {
     public Schedule(MessageEvent<TextMessageContent> event) {
         this.event = event;
     }
+    public Schedule(){}
 
     @Override
     public Message reply() {
         TextMessageContent tmc = this.event.getMessage();
-        schedule = tmc.getText();
+        schedule = tmc.getText();   // schedule に入力された予定を保存して、リッチメニューから入力された日付と紐づける
         return new TextMessage(schedule + " はいつの予定ですか？\n(『予定追加』から日時を選択してください)");
     }
 
