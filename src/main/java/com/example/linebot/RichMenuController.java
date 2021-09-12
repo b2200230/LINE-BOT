@@ -104,10 +104,12 @@ public class RichMenuController {
     // 画像のどの部分（ピクセル）に、どんな動作をするリッチメニューを割り当てるか設定します
     private List<RichMenuArea> makeRichMenuAreas() {
         final ArrayList<RichMenuArea> richMenuAreas = new ArrayList<>();
-        // 予定追加
-        richMenuAreas.add(makeDateTimeAction(0, 0, 1250, 1686, "予定追加"));
+        // 日付選択
+        richMenuAreas.add(makeDateTimeAction(0, 0, 1666, 1686, "予定追加"));
         // 予定確認
-        richMenuAreas.add(makeMessageAction(1250, 0, 1250, 1686, "予定確認"));
+        richMenuAreas.add(makeMessageAction(1666, 0, 834, 843, "予定確認"));
+        // 予定削除
+        richMenuAreas.add(makeMessageAction(1666, 843, 834, 843, "予定削除"));
         return richMenuAreas;
     }
 
