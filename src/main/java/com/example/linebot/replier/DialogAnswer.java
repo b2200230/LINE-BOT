@@ -8,7 +8,7 @@ import com.linecorp.bot.model.message.TextMessage;
 public class DialogAnswer implements Replier {
 
     private PostbackEvent event;
-    public MakeList makeList;
+    private MakeList makeList;
     private String text;
 
     public DialogAnswer(PostbackEvent event,MakeList makeList,String text) {
@@ -16,7 +16,6 @@ public class DialogAnswer implements Replier {
         this.makeList = makeList;
         this.text = text;
     }
-
 
     // PostBackEventに対応する
     @Override
@@ -29,6 +28,7 @@ public class DialogAnswer implements Replier {
                 return new TextMessage("つらたん");
             case "DT":
             // ---------- 時間を取り出す ----------
+                // datetime = 2018-08-15T22:16
                 String dt = this.event.getPostbackContent().getParams().get("datetime");
                 String[] date_link = dt.split("T"); // 日付と時刻をTで分割（date_link[0]:日付　date_link[1]:時間）
                 String[] date = date_link[0].split("-");
@@ -37,8 +37,12 @@ public class DialogAnswer implements Replier {
             // ----------------------------------
 
                 makeList.schedule_add(dd + " " + time,text); // MakeList で入力された日付と予定を紐づけ
-            return new TextMessage(makeList.Add_schedule + "\nを追加しました");
+            return new TextMessage(makeList.getAdd_schedule() + "\nを追加しました");
         }
         return new TextMessage("?");
+    }
+
+    public MakeList getMakeList() {
+        return makeList;
     }
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Follow implements Replier {
 
     private FollowEvent event;
-    public ArrayList<String> useridList = new ArrayList<>();
+    private ArrayList<String> userIdList = new ArrayList<>();
 
     public Follow(FollowEvent event) {
         this.event = event;
@@ -21,7 +21,7 @@ public class Follow implements Replier {
         String userId = this.event.getSource().getUserId();
 
         //ユーザーID記録
-        useridList.add(userId);
+        userIdList.add(userId);
 
         String text = String.format(
                 "こんにちは！\n" +

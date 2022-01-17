@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableScheduling //追加
+@EnableScheduling // push
 public class LinebotApplication {
 
 	public static void main(String[] args) {

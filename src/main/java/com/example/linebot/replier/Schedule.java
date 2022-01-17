@@ -10,7 +10,7 @@ import com.linecorp.bot.model.message.TextMessage;
 public class Schedule implements Replier {
 
     private MessageEvent<TextMessageContent> event;
-    public String schedule;
+    private String schedule;
 
     public Schedule(MessageEvent<TextMessageContent> event) {
         this.event = event;
