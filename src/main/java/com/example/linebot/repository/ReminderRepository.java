@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ReminderRepository {
         this.jdbc = jdbcTemplate;
     }
 
+    // -------
     public void insert(ReminderItem item) {
         // language = sql
         // sql はテーブルにデータを追加するクエリ
@@ -35,14 +37,21 @@ public class ReminderRepository {
         // SQLの？のところを順番に設定し、SQLを実行している
         jdbc.update(sql, userId, slot.getPushAt(), slot.getPushText());
     }
+    // ------
 
+    // リマインダを検索するメソッド
     public List<ReminderItemTuple> findPreviousItems() {
         // language = sql
+        // ? を時間として、ある時間より前にリマインダを設定されているタプルを取り出すSQL
         String sql = "select user_id, push_at, push_text " +
                 "from reminder_item " +
                 "where push_at <= ? ";
 
-        LocalTime now = LocalTime.now();
+        // 現在時刻のインスタンス
+//        LocalTime now = LocalTime.now();
+        long millis = System.currentTimeMillis();
+        Timestamp now = new Timestamp(millis);
+        // SQLの ? に現在時刻をあてはめ、結果を ReminderItem インスタンスの (Array)List で取得する。
         List<ReminderItemTuple> list =
                 jdbc.query(sql, new DataClassRowMapper<>(ReminderItemTuple.class), now);
         return list;
@@ -53,7 +62,9 @@ public class ReminderRepository {
         String sql = "delete from reminder_item " +
                 "where push_at <= ? ";
 
-        LocalTime now = LocalTime.now();
+//        LocalTime now = LocalTime.now();
+        long millis = System.currentTimeMillis();
+        Timestamp now = new Timestamp(millis);
         jdbc.update(sql, now);
     }
 

@@ -60,12 +60,13 @@ public class Push {
 //        this.client = lineMessagingClient;
 //    }
 
-    // テスト
-    @GetMapping("test")
-    public String hello(HttpServletRequest request) {
-        return "Get from " + request.getRequestURL();
-    }
+//    // テスト
+//    @GetMapping("test")
+//    public String hello(HttpServletRequest request) {
+//        return "Get from " + request.getRequestURL();
+//    }
 
+    // -------------------
     // 時報をpushする
     // https://xxxxxx.jp.ngrok.io/timetone にアクセスするとpush
     @GetMapping("timetone")
@@ -84,6 +85,7 @@ public class Push {
         }
         return text;
     }
+    // -------------------
 
     // 予定時刻にリマインド
     @Scheduled(cron = "0 */1 * * * *", zone = "Asia/Tokyo")
@@ -93,12 +95,16 @@ public class Push {
             for(PushMessage message : messages) {
                 BotApiResponse resp = client.pushMessage(message).get();
                 log.info("Sent messages: {}", resp);
+
+                // 削除
                 reminderRepository.deletePreviousItems();
             }
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 
     // 確認メッセージをpush
     // http://localhost:8080/confirm

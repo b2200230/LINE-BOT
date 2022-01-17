@@ -1,33 +1,38 @@
 package com.example.linebot.replier;
 
 
+import com.linecorp.bot.model.message.Message;
+import com.linecorp.bot.model.message.TextMessage;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 // 予定を追加（記録）＆予定リストの表示(『予定確認』から)
-public class MakeList{
+public class MakeList implements Replier{
     private ArrayList<String> scheduleList = new ArrayList<>();
-    private String add_schedule;
+    private String addSchedule;
 
-    public MakeList(){
-
+    @Override
+    public Message reply() {
+        return new TextMessage(addSchedule + "\nを登録しました");
     }
 
-    public void schedule_add(String time, String text){
-        add_schedule = (time + "\n　" + text);
+    public void scheduleAdd(String scheduleTime, String text){
+        addSchedule = (scheduleTime + "\n　" + text);
         /*
         * ○年○月○日 ○:○
-        * 　入力された予定(scheduleText.schedule)
+        * 　入力された予定
         *
-        * となるように Add_schedule に保存　*/
-        scheduleList.add(add_schedule); // 予定リストの中に追加(「予定確認」で見られるように)
+        * となるように addSchedule に保存　*/
+        scheduleList.add(addSchedule); // 予定リストの中に追加(「予定確認」で見られるように)
         Collections.sort(scheduleList); // 日付順でソート
     }
 
     public String getList(){
-        String str = "予定リスト📅";
+        StringBuilder str = new StringBuilder("予定リスト📅");
         for (String ele : scheduleList){
-            str = (str + "\n\n" + ele);
+            // str = (str + "\n\n" + ele);
+            str.append("\n\n").append(ele);
             /*
              * ○年○月○日 ○:○
              * 　予定
@@ -37,22 +42,22 @@ public class MakeList{
              *
              * となるように表示　*/
         }
-        return str;
+        return str.toString();
     }
 
     public String delete(String text){
         int i = 0;
         int de = -1;
-        int f = 0;
+        boolean f = false;
         String str;
         for(String ele : scheduleList){
             if (ele.contains(text)){
                 de = i;
-                f = 1;
+                f = true;
             }
             i++;
         }
-        if(f == 1) {
+        if(f) {
             str = scheduleList.get(de);
             scheduleList.remove(de);
             return (str + "\nを削除しました");
@@ -60,10 +65,6 @@ public class MakeList{
         return text + " という予定は登録されていませんでした";
 
 
-    }
-
-    public String getAdd_schedule () {
-        return add_schedule;
     }
 
 }

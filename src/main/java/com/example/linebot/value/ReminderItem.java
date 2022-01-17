@@ -1,5 +1,6 @@
 package com.example.linebot.value;
 
+// 値格納用クラス
 public class ReminderItem {
 
     private final String userId;

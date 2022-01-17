@@ -27,7 +27,7 @@ public enum Intent {
         // 全てのIntent(REMINDERなど)を取得
         EnumSet<Intent> set = EnumSet.allOf(Intent.class);
         // 引数 text が、パターンに当てはまるかチェック
-        // 当てはまったほうを戻り値とする
+        // 当てはまったものを戻り値とする
         for (Intent intent : set) {
             if (Pattern.matches(intent.regexp, text)) {
                 return intent;
