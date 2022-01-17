@@ -4,14 +4,10 @@ import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 
-import java.sql.Timestamp;
-
 // リッチメニューを押した時の処理
 public class DialogAnswer implements Replier {
 
     private PostbackEvent event;
-//    private String dateAndTime;
-    private String scheduleTime;
 
     public DialogAnswer(PostbackEvent event) {
         this.event = event;
@@ -35,7 +31,8 @@ public class DialogAnswer implements Replier {
                 String dd = date[0] + "年" + date[1] + "月" + date[2] + "日";
                 String time = dateLink[1]; // 時間部分のみ抽出
 
-                this.scheduleTime = dd + " " + time;
+                //    private String dateAndTime;
+                String scheduleTime = dd + " " + time;
 //                this.dateAndTime = dateLink[0] + " " + dateLink[1];
             // ----------------------------------
 

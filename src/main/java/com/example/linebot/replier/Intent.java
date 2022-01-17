@@ -36,8 +36,8 @@ public enum Intent {
         return REMINDER;
     }
 
-    public String getRegexp() {
-        return regexp;
-    }
+//    public String getRegexp() {
+//        return regexp;
+//    }
 
 }
